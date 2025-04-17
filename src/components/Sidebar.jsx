@@ -3,7 +3,7 @@ import { useState } from "react";
 import "../App.css";
 
 const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   
   return (
     <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
@@ -15,12 +15,12 @@ const Sidebar = () => {
       <nav>
       {isCollapsed ?  <>
         <Link to="/">🏠</Link>
-        <Link to="/whiteboard">🖍️</Link>
-        <Link to="/dashboard">📊</Link>
+        <Link to="/whiteboard">📝</Link>
+        <Link to="/Chats">💬</Link>
         </>:<>
         <Link to="/">🏠 Home</Link>
-        <Link to="/whiteboard">🖍️ Whiteboard</Link>
-        <Link to="/dashboard">📊 Dashboard</Link>
+        <Link to="/whiteboard">📝 Whiteboard</Link>
+        <Link to="/Chats">💬 Chats</Link>
         </> }
       </nav>
 

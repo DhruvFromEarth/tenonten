@@ -21,6 +21,7 @@ body::-webkit-scrollbar{
 /*not responsive(incorrect formatting) below 430px width*/
 .navbar {
   position: fixed;
+  z-index: 10;
   padding: 0 20px;
   top: 0;
   left: 0;
@@ -82,8 +83,10 @@ body::-webkit-scrollbar{
 
 .sidebar {
   position: fixed;
+  z-index: 10;
   display: flex;
   flex-direction: column;
+  /* put expanded width in sidebar hover. */
   width: var(--exapnded-width);
   height: 100%;
   padding: 10px;

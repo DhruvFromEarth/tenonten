@@ -1,0 +1,78 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  /* overflow: hidden; */
+}
+
+.toolbar {
+  position: fixed;
+  /* top: 10px; */
+  /* left: 50%; */
+  /* transform: translateX(-50%); */
+  background: rgba(0, 0, 0, 0.8);
+  background: #333;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 10;
+}
+
+.canvas-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  /* position: relative; */
+}
+
+canvas {
+  /* width: 100%;
+    height: 100%; */
+  border: 1px dashed #4d4d4d;
+  z-index: 1;
+}
+
+.toolbar {
+  display: flex;
+  margin-top: 2vh;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.toolbar label,
+.toolbar select,
+.toolbar input,
+.toolbar button {
+  color: white;
+  background: #333;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.toolbar #input1 {
+  border: 0;
+  padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 30px;
+  height: 30px;
+}
+
+.toolbar #input1::-webkit-color-swatch {
+  border-radius: 5px;
+  border: none;
+}
+
+.toolbar #input1::-moz-color-swatch {
+  border-radius: 5px;
+  border: none;
+}
+
+.toolbar button:hover,
+select:hover {
+  background: #555;
+}
