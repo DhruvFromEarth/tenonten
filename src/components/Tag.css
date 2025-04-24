@@ -1,0 +1,40 @@
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tag:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.tag.selected {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.tag.selected:hover {
+  background-color: #7a6ffa;
+}
+
+.remove-tag {
+  background: none;
+  border: none;
+  color: #666;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0 2px;
+}
+
+.remove-tag:hover {
+  color: #ff4444;
+} 

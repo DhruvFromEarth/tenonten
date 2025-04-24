@@ -1,0 +1,103 @@
+:root {
+  /* Light theme variables (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-tertiary: #e0e0e0;
+  --text-primary: #333333;
+  --text-secondary: #666666;
+  --text-tertiary: #999999;
+  --accent-primary: #6457f9;
+  --accent-secondary: #7a6ffa;
+  --border-color: #dcdcdc;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --card-bg: #ffffff;
+  --input-bg: #f9f9f9;
+  --input-border: #dfe3e6;
+  --input-text: #000000;
+  --input-placeholder: #686868;
+  --button-bg: #6457f9;
+  --button-text: #ffffff;
+  --button-hover: #7a6ffa;
+  --button-disabled: #cccccc;
+  --success-color: #4caf50;
+  --warning-color: #ff9800;
+  --error-color: #f44336;
+  --info-color: #2196f3;
+}
+
+/* Dark theme variables */
+.dark-mode {
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2d2d2d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-tertiary: #808080;
+  --accent-primary: #7a6ffa;
+  --accent-secondary: #8f85fb;
+  --border-color: #404040;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --card-bg: #1e1e1e;
+  --input-bg: #2d2d2d;
+  --input-border: #404040;
+  --input-text: #e0e0e0;
+  --input-placeholder: #808080;
+  --button-bg: #7a6ffa;
+  --button-text: #ffffff;
+  --button-hover: #8f85fb;
+  --button-disabled: #505050;
+  --success-color: #66bb6a;
+  --warning-color: #ffb74d;
+  --error-color: #ef5350;
+  --info-color: #42a5f5;
+}
+
+/* Apply theme variables to common elements */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+input, select, textarea {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--input-border);
+}
+
+input::placeholder {
+  color: var(--input-placeholder);
+}
+
+button {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+
+button:hover:not(:disabled) {
+  background-color: var(--button-hover);
+}
+
+button:disabled {
+  background-color: var(--button-disabled);
+  cursor: not-allowed;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+} 
