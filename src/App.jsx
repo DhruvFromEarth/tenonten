@@ -6,29 +6,32 @@ import Sidebar from "./components/Sidebar";
 import TaskManager from "./pages/TaskManagerPage/Taskmanager";
 import Whiteboard from "./pages/WhiteboardPage/Whiteboard";
 import Chats from "./pages/ChatsPage/Chats";
-
+import { ThemeProvider } from "./context/ThemeContext";
+import "./styles/theme.css";
 import "./App.css";
 // import { useState } from "react";
 
 function App() {
   // const [isCollapsed, setIsCollapsed] = useState(false);
   return (
-    <BrowserRouter>
-      <div className="app-container">
-        <Navbar />
-        <div className="content-container">
-          <Sidebar />
-          {/* <main className={`main-container ${isCollapsed ? "" : "expanded"}`}> */}
-          <main className="main-container">
-            <Routes>
-              <Route path="/" element={<TaskManager />} />
-              <Route path="/whiteboard" element={<Whiteboard />} />
-              <Route path="/Chats" element={<Chats />} />
-            </Routes>
-          </main>
+    <ThemeProvider>
+      <BrowserRouter>
+        <div className="app-container">
+          <Navbar />
+          <div className="content-container">
+            <Sidebar />
+            {/* <main className={`main-container ${isCollapsed ? "" : "expanded"}`}> */}
+            <main className="main-container">
+              <Routes>
+                <Route path="/" element={<TaskManager />} />
+                <Route path="/whiteboard" element={<Whiteboard />} />
+                <Route path="/Chats" element={<Chats />} />
+              </Routes>
+            </main>
+          </div>
         </div>
-      </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

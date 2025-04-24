@@ -6,14 +6,14 @@ import "../App.css";
 const Canvas = () => {
   const canvasRef = useRef(null);
   const [canvas, setCanvas] = useState(null);
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState("#ffffff");
   const [lineWidth, setLineWidth] = useState(5);
   // const [changeBrush, changeBrush] = useState("PencilBrush");
 
   useEffect(() => {
     const fabricCanvas = new fabric.Canvas(canvasRef.current, {
       isDrawingMode: true,
-      // backgroundColor: "#fff",
+      // backgroundColor: "#333333",
       width: window.innerWidth,
       height: window.innerHeight,
     });

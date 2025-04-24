@@ -5,7 +5,7 @@ const Toolbar = ({setColor, lineWidth, setLineWidth, changeBrush, clearCanvas}) 
   return (
     <div className="toolbar">
       {/* <label>Brush Color:</label> */}
-      <input type="color" id="input1" onChange={(e) => setColor(e.target.value)} />
+      <input type="color" id="input1" defaultValue="#FFFFFF" onChange={(e) => setColor(e.target.value)} />
 
       {/* <label>Brush Size:</label> */}
       <input

@@ -6,10 +6,14 @@ body {
 }
 
 .toolbar {
+  display: flex;
+  margin-top: 2vh;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
   position: fixed;
-  /* top: 10px; */
-  /* left: 50%; */
-  /* transform: translateX(-50%); */
+  top: 60px;
+  margin-right: 40px;
   background: rgba(0, 0, 0, 0.8);
   background: #333;
   padding: 10px;
@@ -33,13 +37,6 @@ canvas {
   z-index: 1;
 }
 
-.toolbar {
-  display: flex;
-  margin-top: 2vh;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 10px;
-}
 
 .toolbar label,
 .toolbar select,
