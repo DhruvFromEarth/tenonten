@@ -1,0 +1,234 @@
+.admin-page {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-page h1 {
+  margin-bottom: 30px;
+  color: var(--text-primary);
+}
+
+.admin-page h2 {
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.notification-section {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.notification-section p {
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 20px;
+}
+
+.notification-section table,
+.users-list table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.notification-section th,
+.notification-section td,
+.users-list th,
+.users-list td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+.notification-section th,
+.users-list th {
+  font-weight: 600;
+  background: var(--bg-tertiary);
+}
+
+.approve-button,
+.reject-button,
+.remove-button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.approve-button {
+  background: #28a745;
+  color: white;
+}
+
+.approve-button:hover {
+  background: #218838;
+}
+
+.reject-button {
+  background: #dc3545;
+  color: white;
+}
+
+.reject-button:hover {
+  background: #c82333;
+}
+
+.remove-button {
+  background: #dc3545;
+  color: white;
+}
+
+.remove-button:hover {
+  background: #c82333;
+}
+
+.remove-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
+
+.users-list {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--bg-secondary);
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px;
+  max-width: 500px;
+}
+
+.modal-content h3 {
+  margin-bottom: 15px;
+  color: var(--text-primary);
+}
+
+.modal-content p {
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.confirm-button,
+.cancel-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-button {
+  background: #dc3545;
+  color: white;
+}
+
+.confirm-button:hover {
+  background: #c82333;
+}
+
+.cancel-button {
+  background: #6c757d;
+  color: white;
+}
+
+.cancel-button:hover {
+  background: #5a6268;
+}
+
+.error {
+  color: #dc3545;
+  text-align: center;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.role-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.role-edit input {
+  padding: 6px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.role-edit-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.save-button {
+  background: #28a745;
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background: #218838;
+}
+
+.edit-button {
+  background: #17a2b8;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
+.edit-button:hover {
+  background: #138496;
+}
+
+.edit-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+} 

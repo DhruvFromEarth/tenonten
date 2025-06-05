@@ -1,0 +1,98 @@
+.task-card {
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 5px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 4px var(--shadow-color);
+  cursor: pointer; /* cursor: move;*/
+  /* transition: transform 0.2s, box-shadow 0.2s; */
+  border: 1px solid var(--border-color);
+}
+
+.task-card:hover {
+  /* transform: translateY(-2px); */
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.task-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  flex: 1;
+  /* text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap; */
+}
+
+.task-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.assigned-users {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delete-btn {
+  background: var(--bg-tertiary);
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  height: 30px;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.delete-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+.status-select {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.status-select:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.task-description {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 10px 0;
+  line-height: 1.4;
+}
+
+.task-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tag {
+  background: #e0e0e0;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: #555;
+} 

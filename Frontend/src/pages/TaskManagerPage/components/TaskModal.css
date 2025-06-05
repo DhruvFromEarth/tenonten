@@ -1,0 +1,215 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: var(--card-bg);
+  color: var(--text-primary);
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  border: 1px solid var(--border-color);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h4 {
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.close-button {
+  background: none;
+  border: none;
+  border-radius: 5px;
+  font-size: 24px;
+  width: 24px;
+  cursor: pointer;
+  color: var(--text-secondary);
+}
+
+.modal-body {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.modal-input,
+.modal-textarea,
+.modal-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  font-size: 14px;
+  background: var(--input-bg);
+  color: var(--input-text);
+}
+
+.modal-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.task-detail {
+  margin-bottom: 20px;
+}
+
+.task-detail h3 {
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.task-detail p {
+  margin: 0;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.status-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.status-button {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100px;
+  text-align: left;
+}
+
+.status-button.active {
+  background: var(--accent-primary);
+  color: var(--button-text);
+  border-color: var(--accent-primary);
+}
+
+.status-time {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  flex: 1;
+}
+
+.assigned-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.assigned-user {
+  background: var(--bg-tertiary);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.remove-user {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.2rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.remove-user:hover {
+  color: var(--text-primary);
+}
+
+.modal-select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--input-border);
+  border-radius: 4px;
+  font-size: 14px;
+  background: var(--input-bg);
+  color: var(--input-text);
+  margin-top: 5px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.edit-button,
+.save-button,
+.cancel-button {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  border: none;
+}
+
+.edit-button {
+  background: var(--accent-primary);
+  color: var(--button-text);
+}
+
+.save-button {
+  background: var(--success-color);
+  color: var(--button-text);
+}
+
+.cancel-button {
+  background: var(--text-tertiary);
+  color: var(--button-text);
+}
+
+.edit-button:hover,
+.save-button:hover,
+.cancel-button:hover {
+  opacity: 0.9;
+} 
