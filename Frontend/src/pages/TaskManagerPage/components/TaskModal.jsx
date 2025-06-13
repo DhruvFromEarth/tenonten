@@ -180,12 +180,12 @@ const TaskModal = ({ task, onClose, onUpdate, onStatusChange, users }) => {
                 <h3>Status</h3>
                 <div className="status-buttons">
                   <div className="status-row">
-                    <button
-                      className={`status-button ${editedTask.status === 'todo' ? 'active' : ''}`}
-                      onClick={() => handleStatusChange('todo')}
-                    >
-                      To Do
-                    </button>
+                  <button
+                    className={`status-button ${editedTask.status === 'todo' ? 'active' : ''}`}
+                    onClick={() => handleStatusChange('todo')}
+                  >
+                    To Do
+                  </button>
                     {task.timestamp?.todo && (
                       <span className="status-time">
                         {getUserName(task.timestamp.todo.userId)} - {new Date(task.timestamp.todo.date).toLocaleString()}
@@ -193,12 +193,12 @@ const TaskModal = ({ task, onClose, onUpdate, onStatusChange, users }) => {
                     )}
                   </div>
                   <div className="status-row">
-                    <button
-                      className={`status-button ${editedTask.status === 'doing' ? 'active' : ''}`}
-                      onClick={() => handleStatusChange('doing')}
-                    >
-                      Doing
-                    </button>
+                  <button
+                    className={`status-button ${editedTask.status === 'doing' ? 'active' : ''}`}
+                    onClick={() => handleStatusChange('doing')}
+                  >
+                    Doing
+                  </button>
                     {task.timestamp?.doing && (
                       <span className="status-time">
                         {getUserName(task.timestamp.doing.userId)} - {new Date(task.timestamp.doing.date).toLocaleString()}
@@ -206,12 +206,12 @@ const TaskModal = ({ task, onClose, onUpdate, onStatusChange, users }) => {
                     )}
                   </div>
                   <div className="status-row">
-                    <button
-                      className={`status-button ${editedTask.status === 'done' ? 'active' : ''}`}
-                      onClick={() => handleStatusChange('done')}
-                    >
-                      Done
-                    </button>
+                  <button
+                    className={`status-button ${editedTask.status === 'done' ? 'active' : ''}`}
+                    onClick={() => handleStatusChange('done')}
+                  >
+                    Done
+                  </button>
                     {task.timestamp?.done && (
                       <span className="status-time">
                         {getUserName(task.timestamp.done.userId)} - {new Date(task.timestamp.done.date).toLocaleString()}

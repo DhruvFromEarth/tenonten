@@ -189,12 +189,12 @@ const AdminPage = () => {
                     <span>{user.role || 'No role assigned'}</span>
                   )}
                 </td>
-                <td>{user.taskCount}</td>
+                <td>{user.taskCount ? `${user.taskCount.todo} - ${user.taskCount.doing} - ${user.taskCount.done}` : '0 - 0 - 0'}</td>
                 <td>
                   <button
                     onClick={() => handleEditRole(user)}
                     className="edit-button"
-                    disabled={user.position === 'admin'}
+                    // disabled={user.position === 'admin'}
                   >
                     Edit Role
                   </button>

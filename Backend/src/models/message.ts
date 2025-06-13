@@ -4,6 +4,7 @@ interface IMessage extends Document {
   message: string;
   roomId: string;
   time: Date;
+  userName: string;
   organisationId: mongoose.Types.ObjectId;
 }
 
@@ -17,6 +18,10 @@ const messageSchema = new mongoose.Schema<IMessage>({
     type: String,
     required: true,
     index: true
+  },
+  userName: {
+    type: String,
+    required: true
   },
   time: {
     type: Date,

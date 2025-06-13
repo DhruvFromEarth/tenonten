@@ -241,7 +241,7 @@ export const AuthModal = ({ showModal, setShowModal, isLoggedIn, setIsLoggedIn }
                   {organisations.map((org, index) => (
                     <button
                       key={index}
-                      className="organisation-item"
+                      className={`organisation-item ${localStorage.getItem('selectedOrganisation') === org.organisationName ? 'selected' : ''}`}
                       onClick={() => {
                         if (org.organisationName) {
                           localStorage.setItem('selectedOrganisation', org.organisationName);

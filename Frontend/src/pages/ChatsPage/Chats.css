@@ -5,16 +5,18 @@
 
 .chat-container {
   display: flex;
+  height: calc(100vh - 60px);
+  width: calc(100vw - 60px);
   background-color: var(--bg-primary);
-  overflow: hidden;
+  position: fixed;
 }
 
 .chat-sidebar {
-  width: 250px;
+  height: calc(100vh - 60px);
+  min-width: 200px;
+  max-width: 200px;
   background-color: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
-  display: flex;
-  flex-direction: column;
   padding: 20px;
   overflow-y: auto;
 }
@@ -48,8 +50,9 @@
 }
 
 .groups-list {
-  flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .groups-header {
@@ -61,33 +64,34 @@
 
 .groups-header h3 {
   color: var(--text-primary);
-  font-size: 1.1rem;
   margin: 0;
 }
 
 .add-group-btn {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
   background-color: var(--accent-primary);
   color: var(--button-text);
   border: none;
-  font-size: 18px;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .add-group-btn:hover {
-  background-color: var(--button-hover);
+  background-color: var(--accent-secondary);
 }
 
 .group-item {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
   color: var(--text-primary);
   transition: background-color 0.2s;
@@ -104,36 +108,33 @@
 
 .chat-main {
   flex: 1;
+  /* margin-left: 200px; */
   display: flex;
   flex-direction: column;
-  padding: 20px 20px 0px 20px;
-  height: calc(100vh - 60px);
+  background-color: var(--bg-primary);
   overflow: hidden;
 }
 
 .messages-area {
   flex: 1;
-  overflow-y: auto;
   padding: 20px;
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px var(--shadow-color);
-  margin-bottom: 20px;
-  border: 1px solid var(--border-color);
-  height: calc(100vh - 200px);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .message {
-  margin-bottom: 15px;
+  align-self: flex-start;
+  max-width: 70%;
   padding: 10px;
   border-radius: 8px;
   background-color: var(--bg-secondary);
-  max-width: 80%;
-  border: 1px solid var(--border-color);
+  color: var(--text-primary);
 }
 
 .message.own-message {
-  margin-left: auto;
+  align-self: flex-end;
   background-color: var(--accent-primary);
   color: var(--button-text);
 }
@@ -142,72 +143,60 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 5px;
-  font-size: 12px;
+  font-size: 0.9em;
 }
 
 .user-id {
   font-weight: bold;
+  margin-right: 10px;
 }
 
 .time {
   color: var(--text-secondary);
 }
 
-.own-message .time {
+.message.own-message .time {
   color: var(--button-text);
   opacity: 0.8;
 }
 
 .message-content {
-  word-break: break-word;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .input-area {
+  padding: 20px;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
   display: flex;
   gap: 10px;
-  padding: 10px;
-  background-color: var(--card-bg);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px var(--shadow-color);
-  border: 1px solid var(--border-color);
-  position: sticky;
-  bottom: 0;
-  margin-top: auto;
 }
 
 .input-area input {
   flex: 1;
-  padding: 8px 12px;
+  padding: 10px;
   border: 1px solid var(--input-border);
   border-radius: 4px;
-  font-size: 14px;
   background-color: var(--input-bg);
-  color: var(--text-primary);
-  outline: none;
-}
-
-.input-area input:focus {
-  border-color: var(--input-border);
+  color: var(--input-text);
 }
 
 .input-area button {
-  padding: 8px 16px;
-  background-color: var(--button-bg);
+  padding: 10px 20px;
+  background-color: var(--accent-primary);
   color: var(--button-text);
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.2s;
 }
 
 .input-area button:hover {
-  background-color: var(--button-hover);
-}
-
-.input-area button:disabled {
-  background-color: var(--button-disabled);
-  cursor: not-allowed;
+  background-color: var(--accent-secondary);
 }
 
 /* Modal styles */
@@ -217,21 +206,19 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .modal-content {
   background-color: var(--card-bg);
-  border-radius: 8px;
   padding: 20px;
+  border-radius: 8px;
   width: 400px;
   max-width: 90%;
   box-shadow: 0 4px 8px var(--shadow-color);
-  border: 1px solid var(--border-color);
 }
 
 .modal-form {
@@ -244,14 +231,8 @@
   padding: 10px;
   border: 1px solid var(--input-border);
   border-radius: 4px;
-  font-size: 14px;
   background-color: var(--input-bg);
-  color: var(--text-primary);
-  outline: none;
-}
-
-.modal-form input:focus {
-  border-color: var(--input-border);
+  color: var(--input-text);
 }
 
 .modal-actions {
@@ -262,28 +243,29 @@
 
 .modal-actions button {
   padding: 8px 16px;
+  border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.2s;
-  background-color: var(--button-bg);
+}
+
+.modal-actions button:first-child {
+  background-color: var(--accent-primary);
   color: var(--button-text);
-  border: none;
-  text-transform: capitalize;
+}
+
+.modal-actions button:nth-child(2) {
+  background-color: var(--success-color);
+  color: var(--button-text);
+}
+
+.modal-actions button:last-child {
+  background-color: var(--error-color);
+  color: var(--button-text);
 }
 
 .modal-actions button:hover {
-  background-color: var(--button-hover);
-}
-/* for cancel button */
-.modal-actions button:last-child {
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border-color);
-}
-
-.modal-actions button:last-child:hover {
-  background-color: var(--bg-tertiary);
+  opacity: 0.9;
 }
 
 /* @media (max-width: 768px) {

@@ -102,7 +102,7 @@ const TaskManager = () => {
       }
       const response = await axios.delete(`/task/${taskId}?organisationName=${selectedOrg}`);
       if (response.data.tasks) {
-        setTasks(response.data.tasks);
+      setTasks(response.data.tasks);
       }
     } catch (error) {
       console.error("Error deleting task:", error);
@@ -141,7 +141,7 @@ const TaskManager = () => {
         organisationName: selectedOrg
       });
       if (response.data.tasks) {
-        setTasks(response.data.tasks);
+      setTasks(response.data.tasks);
       }
     } catch (error) {
       console.error("Error updating task:", error);

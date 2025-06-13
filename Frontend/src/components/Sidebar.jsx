@@ -34,13 +34,11 @@ const Sidebar = () => {
   }, []);
 
   return (
-    //collapsed class not needed now.
-    <div className={`sidebar ${isCollapsed ? "collapsed" : ""}`}>
-
-      <button onClick={() => setIsCollapsed(!isCollapsed)}>
-        {isCollapsed ? "≡" : "Menu"}
-      </button>
-
+    <div
+      className={'sidebar'}
+      onMouseEnter={() => setIsCollapsed(false)}
+      onMouseLeave={() => setIsCollapsed(true)}
+    >
       <nav>
         {isCollapsed ? (
           <>
@@ -58,7 +56,6 @@ const Sidebar = () => {
           </>
         )}
       </nav>
-
     </div>
   );
 };

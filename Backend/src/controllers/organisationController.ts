@@ -185,23 +185,32 @@ export async function handleGetOrgUsers(req: AuthRequest, res: Response): Promis
     }).select('userName _id organisations role');
 
     // Get task counts for each user
-    const taskCounts = await Promise.all(users.map(async (user) => {
+    const taskCounts = await Promise.all(
+      users.map(
+        async (user) => {
       const tasksDoc = await TaskModel.findOne({ organisationId: organisation._id });
-      const count = tasksDoc ? tasksDoc.tasks.filter(task => 
-        task.assignedTo.some(id => id.toString() === (user._id as mongoose.Types.ObjectId).toString())
-      ).length : 0;
-      console.log(`Task count for user ${user.userName}:`, count);
-      return { userId: user._id, count };
+      let todo = 0, doing = 0, done = 0;
+      if (tasksDoc) {
+        tasksDoc.tasks.forEach(task => {
+          if (task.assignedTo.some(id => id.toString() === (user._id as mongoose.Types.ObjectId).toString())) {
+            if (task.status === 'todo') todo++;
+            else if (task.status === 'doing') doing++;
+            else if (task.status === 'done') done++;
+          }
+        });
+      }
+      return { userId: user._id, todo, doing, done };
     }));
 
-    // Format the response to include position, role and task count
-    const formattedUsers = users.map(user => {
+    // Format the response to include position, role and task count per status
+    const formattedUsers = users.map(
+      user => {
       const userOrg = user.organisations.find(org => 
         org.organisationId.toString() === organisation._id.toString()
       );
       const taskCount = taskCounts.find(tc => 
         (tc.userId as mongoose.Types.ObjectId).toString() === (user._id as mongoose.Types.ObjectId).toString()
-      )?.count || 0;
+      ) || { todo: 0, doing: 0, done: 0 };
       return {
         _id: user._id,
         userName: user.userName,
@@ -313,7 +322,13 @@ export const removeUserFromOrganisation = async (req: AuthRequest, res: Response
             return;
         }
 
-        // Remove user from organization
+        // Remove user from organization's usersList
+        await OrganisationModel.findByIdAndUpdate(
+            organisation._id,
+            { $pull: { usersList: userToRemove._id } }
+        );
+
+        // Remove organization from user's organizations array
         userToRemove.organisations = userToRemove.organisations.filter(org => 
             org.organisationId.toString() !== organisation._id.toString()
         );

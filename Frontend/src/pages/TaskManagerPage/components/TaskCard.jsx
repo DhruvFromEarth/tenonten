@@ -11,7 +11,7 @@ const TaskCard = ({ task, onDragStart, onDragEnd, onStatusChange, onTaskClick, o
   function handleCardClick(e) {
     // Only trigger if the click wasn't on the select or delete button
     if (!e.target.closest('.status-select') && !e.target.closest('.delete-btn')) {
-      onTaskClick(task);
+    onTaskClick(task);
     }
   }
 
@@ -46,18 +46,18 @@ const TaskCard = ({ task, onDragStart, onDragEnd, onStatusChange, onTaskClick, o
         <h3>{task.taskTitle}</h3>
         <div className="task-actions">
           <span className="assigned-users">{getAssignedUserNames()}</span>
-          <select
-            value={task.status}
+        <select
+          value={task.status}
             onChange={handleStatusChange}
-            className="status-select"
-          >
-            <option value="todo">To Do</option>
-            <option value="doing">Doing</option>
-            <option value="done">Done</option>
-          </select>
-          <button className="delete-btn" onClick={handleDeleteClick}>
-            <img src={deleteIcon} alt="Delete" style={{ width: 20, height: 20 }} />
-          </button>
+          className="status-select"
+        >
+          <option value="todo">To Do</option>
+          <option value="doing">Doing</option>
+          <option value="done">Done</option>
+        </select>
+        <button className="delete-btn" onClick={handleDeleteClick}>
+          <img src={deleteIcon} alt="Delete" style={{ width: 20, height: 20 }} />
+        </button>
         </div>
       </div>
       {task.taskDescription && <p className="task-description">{task.taskDescription}</p>}

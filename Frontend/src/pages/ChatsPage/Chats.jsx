@@ -124,10 +124,10 @@ function Chats() {
         const formattedHistory = historyMessages.map(msg => ({
           type: 'message',
           payload: {
-            roomId: msg.roomId,
-            userName: msg.userName,
-            message: msg.message,
-            time: msg.time
+            roomId: msg.payload.roomId,
+            userName: msg.payload.userName,
+            message: msg.payload.message,
+            time: msg.payload.time
           }
         }));
         allMessagesRef.current = formattedHistory;
@@ -215,10 +215,6 @@ function Chats() {
   return (
     <div className="chat-container">
       <div className="chat-sidebar">
-        {/* <div className="user-profile">
-          <div className="user-avatar">👤</div>
-          <div className="user-name">{usernameRef.current}</div>
-        </div> */}
         <div className="groups-list">
           <div className="groups-header">
             <h3>Groups</h3>

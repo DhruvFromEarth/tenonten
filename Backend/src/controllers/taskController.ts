@@ -14,7 +14,7 @@ export const getTasks = async (req: any, res: Response) => {
     if (!organisationName) {
       return res.status(400).json({ message: 'Organisation name is required' });
     }
-
+    
     // Get user's organization
     const user = await UserModel.findById(userId);
     if (!user) {

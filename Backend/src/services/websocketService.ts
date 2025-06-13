@@ -1,10 +1,25 @@
 import { WebSocket } from 'ws';
 import { MessageModel } from '../models/message';
 import { User, Message } from '../types';
+import { UserModel } from '../models/user';
 
 const users = new Map<string, User>(); // userName -> User
 const rooms = new Map<string, Set<string>>(); // roomId -> Set of userNames
 
+// Helper function to get user's organization ID
+async function getUserOrganisationId(userName: string): Promise<string | null> {
+  try {
+    const user = await UserModel.findOne({ userName });
+    if (!user || !user.organisations || user.organisations.length === 0) {
+      return null;
+    }
+    // Get the first organization's ID (you might want to modify this based on your requirements)
+    return user.organisations[0].organisationId.toString();
+  } catch (error) {
+    console.error('Error getting user organization:', error);
+    return null;
+  }
+}
 
 const broadcastToRoom = (roomId: string, message: Message) => {
   const roomuserNames = rooms.get(roomId);
@@ -30,12 +45,22 @@ async function loadChatHistory(roomId: string, ws: WebSocket) {
       .sort({ time: 1 })
       .limit(10); // Limit to last 10 messages
 
+    const formattedMessages = messages.map(msg => ({
+      type: 'message',
+      payload: {
+        roomId: msg.get('roomId'),
+        userName: msg.get('userName'),
+        message: msg.get('message'),
+        time: msg.get('time').toISOString()
+      }
+    }));
+
     const historyMessage: Message = {
       type: 'history',
       payload: {
         roomId,
-        userName: 'system', //TODO
-        message: JSON.stringify(messages),
+        userName: 'system',
+        message: JSON.stringify(formattedMessages),
         time: getCurrentTime()
       }
     };
@@ -96,12 +121,20 @@ export const handleWebSocketConnection = (ws: WebSocket) => {
         }
       }
       else if (message.type === 'message') {
+        // Get user's organization ID
+        const organisationId = await getUserOrganisationId(message.payload.userName);
+        if (!organisationId) {
+          console.error('No organization found for user:', message.payload.userName);
+          return;
+        }
+
         // Save message to MongoDB
         const newMessage = new MessageModel({
           roomId: message.payload.roomId,
           userName: message.payload.userName,
           message: message.payload.message,
-          time: new Date(message.payload.time)
+          time: new Date(message.payload.time),
+          organisationId
         });
         await newMessage.save();
 
@@ -130,6 +163,13 @@ export const handleWebSocketConnection = (ws: WebSocket) => {
         // Remove user from users map
         users.delete(userName);
 
+        // Get user's organization ID
+        const organisationId = await getUserOrganisationId(userName);
+        if (!organisationId) {
+          console.error('No organization found for user:', userName);
+          return;
+        }
+
         // Create and save leave message to MongoDB
         const leaveMessage: Message = {
           type: 'message' as const,
@@ -147,7 +187,8 @@ export const handleWebSocketConnection = (ws: WebSocket) => {
             roomId: leaveMessage.payload.roomId,
             userName: leaveMessage.payload.userName,
             message: leaveMessage.payload.message,
-            time: new Date(leaveMessage.payload.time)
+            time: new Date(leaveMessage.payload.time),
+            organisationId
           });
           await newMessage.save();
 
