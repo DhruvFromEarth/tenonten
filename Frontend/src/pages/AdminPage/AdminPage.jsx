@@ -12,10 +12,13 @@ const AdminPage = () => {
   const [confirmUsername, setConfirmUsername] = useState('');
   const [editingRole, setEditingRole] = useState(null);
   const [newRole, setNewRole] = useState('');
+  const [projectHierarchy, setProjectHierarchy] = useState([]);
+  const [loadingHierarchy, setLoadingHierarchy] = useState(true);
 
   useEffect(() => {
     fetchUsers();
     fetchJoinRequests();
+    fetchProjectHierarchy();
   }, []);
 
   const fetchUsers = async () => {
@@ -54,6 +57,30 @@ const AdminPage = () => {
     } catch (error) {
       console.error('Error fetching join requests:', error);
       setError('Failed to fetch join requests');
+    }
+  };
+
+  const fetchProjectHierarchy = async () => {
+    try {
+      setLoadingHierarchy(true);
+      const selectedOrg = localStorage.getItem('selectedOrganisation');
+      if (!selectedOrg) {
+        setError('No organization selected');
+        setLoadingHierarchy(false);
+        return;
+      }
+
+      // Use the new recursive members endpoint
+      const response = await axios.post('/org/recursive-members', {
+        organisationName: selectedOrg
+      });
+
+      setProjectHierarchy(response.data);
+      setLoadingHierarchy(false);
+    } catch (error) {
+      console.error('Error fetching project hierarchy:', error);
+      setError('Failed to fetch project hierarchy');
+      setLoadingHierarchy(false);
     }
   };
 
@@ -151,7 +178,7 @@ const AdminPage = () => {
   return (
     <div className="admin-page">
       <h1>Organization Management</h1>
-      
+
       <div className="users-list">
         <h2>Organization Members</h2>
         <table>
@@ -243,6 +270,50 @@ const AdminPage = () => {
                     >
                       Reject
                     </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+
+      <div className="project-hierarchy">
+        <h2>Project Hierarchy</h2>
+        {loadingHierarchy ? (
+          <p>Loading project hierarchy...</p>
+        ) : (
+          <table className="hierarchy-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Organizations</th>
+                <th>Skills</th>
+              </tr>
+            </thead>
+            <tbody>
+              {projectHierarchy.map((user) => (
+                <tr key={user.userName}>
+                  <td>{user.userName}</td>
+                  <td>
+                    <ul className="org-list">
+                      {user.projects.map((project, index) => (
+                        <li key={index}>
+                          {project.projectName} ({project.position})
+                        </li>
+                      ))}
+                    </ul>
+                  </td>
+                  <td>
+                    <ul className="skills-list">
+                      {user.skills && user.skills.length > 0 ? (
+                        user.skills.map((skill, index) => (
+                          <li key={index} className="skill-tag">{skill}</li>
+                        ))
+                      ) : (
+                        <li className="no-skills">No skills listed</li>
+                      )}
+                    </ul>
                   </td>
                 </tr>
               ))}

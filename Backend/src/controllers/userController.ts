@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { UserModel } from '../models/user';
 import { updateUserPosition } from '../services/userService';
+import { AuthRequest } from '../types/auth';
 
 
 export const createUser = async (req: Request, res: Response): Promise<any> => {
@@ -98,3 +99,123 @@ export async function handleUpdateUserPosition(req: Request, res: Response) {
     res.status(500).json({ error: err.message });
   }
 }
+
+export const getUserByUsername = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { userName } = req.params;
+
+    if (!userName) {
+      res.status(400).json({ message: 'Username is required' });
+      return;
+    }
+
+    const user = await UserModel.findOne({ userName })
+      .populate('organisations.organisationId', 'organisationName');
+
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    // Format the response to include organization names
+    const formattedUser = {
+      userName: user.userName,
+      organisations: user.organisations.map(org => ({
+        organisationName: (org.organisationId as any).organisationName,
+        position: org.position,
+        role: org.role
+      }))
+    };
+
+    res.status(200).json(formattedUser);
+  } catch (error) {
+    console.error('Error getting user:', error);
+    res.status(500).json({ message: 'Error getting user data' });
+  }
+};
+
+export const getUserSkills = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    res.status(200).json({ skills: user.skills || [] });
+  } catch (error) {
+    console.error('Error in getUserSkills:', error);
+    res.status(500).json({ message: 'Error fetching user skills' });
+  }
+};
+
+export const addUserSkill = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { skill } = req.body;
+
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
+
+    if (!skill) {
+      res.status(400).json({ message: 'Skill is required' });
+      return;
+    }
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    // Check if skill already exists
+    if (user.skills?.includes(skill)) {
+      res.status(400).json({ message: 'Skill already exists' });
+      return;
+    }
+
+    // Add skill to user's skills array
+    user.skills = [...(user.skills || []), skill];
+    await user.save();
+
+    res.status(200).json({ message: 'Skill added successfully', skills: user.skills });
+  } catch (error) {
+    console.error('Error in addUserSkill:', error);
+    res.status(500).json({ message: 'Error adding skill' });
+  }
+};
+
+export const removeUserSkill = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const userId = req.userId;
+    const { skill } = req.params;
+
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
+
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    // Remove skill from user's skills array
+    user.skills = (user.skills || []).filter(s => s !== skill);
+    await user.save();
+
+    res.status(200).json({ message: 'Skill removed successfully', skills: user.skills });
+  } catch (error) {
+    console.error('Error in removeUserSkill:', error);
+    res.status(500).json({ message: 'Error removing skill' });
+  }
+};

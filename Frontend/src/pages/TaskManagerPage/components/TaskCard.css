@@ -90,9 +90,9 @@
 }
 
 .tag {
-  background: #e0e0e0;
+  background: var(--bg-tertiary);
   padding: 3px 8px;
   border-radius: 12px;
   font-size: 0.8rem;
-  color: #555;
+  color: var(--text-primary);
 } 

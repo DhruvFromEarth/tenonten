@@ -1,6 +1,6 @@
 import { Request, Response, RequestHandler } from 'express';
 import mongoose from 'mongoose';
-import { createOrganisation } from '../services/organisationServices';
+import { createOrganisation, getRecursiveProjectMembers } from '../services/organisationServices';
 import { UserModel } from '../models/user';
 import { OrganisationModel, IOrganisation } from '../models/organisation';
 import { TaskModel } from '../models/task';
@@ -664,3 +664,49 @@ export const updateUserRole = async (req: AuthRequest, res: Response): Promise<v
 };
 
 export const updateUserRoleHandler: RequestHandler = updateUserRole as unknown as RequestHandler;
+
+export const handleGetRecursiveProjectMembers = async (req: AuthRequest, res: Response): Promise<void> => {
+  try {
+    const { organisationName } = req.body;
+    const userId = req.userId;
+
+    if (!userId) {
+      res.status(400).json({ message: 'User not authenticated' });
+      return;
+    }
+
+    if (!organisationName) {
+      res.status(400).json({ message: 'Organisation name is required' });
+      return;
+    }
+
+    // Find the organization
+    const organisation = await OrganisationModel.findOne({ organisationName });
+    if (!organisation) {
+      res.status(404).json({ message: 'Organisation not found' });
+      return;
+    }
+
+    // Check if user belongs to this organization
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: 'User not found' });
+      return;
+    }
+
+    const userOrg = user.organisations.find(org => 
+      org.organisationId.toString() === organisation._id.toString()
+    );
+    if (!userOrg) {
+      res.status(403).json({ message: 'User does not belong to this organization' });
+      return;
+    }
+
+    // Get recursive project members
+    const members = await getRecursiveProjectMembers(organisationName);
+    res.status(200).json(members);
+  } catch (error) {
+    console.error('Error in handleGetRecursiveProjectMembers:', error);
+    res.status(500).json({ message: 'Error fetching recursive project members' });
+  }
+};

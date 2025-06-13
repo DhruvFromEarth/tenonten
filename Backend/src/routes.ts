@@ -1,6 +1,6 @@
 import express, { Router, RequestHandler } from 'express';
 import { auth } from './middlewares/auth';
-import { createUser, loginUser, handleUpdateUserPosition } from './controllers/userController';
+import { createUser, loginUser, handleUpdateUserPosition, getUserByUsername, getUserSkills, addUserSkill, removeUserSkill } from './controllers/userController';
 import { createRoom, addUserToRoom } from './controllers/roomController';
 import {
     handleCreateOrganisation,
@@ -13,7 +13,8 @@ import {
     addUserToOrganisation,
     removeUserFromOrganisation,
     checkUserIsAdmin,
-    updateUserRoleHandler
+    updateUserRoleHandler,
+    handleGetRecursiveProjectMembers
 } from './controllers/organisationController';
 import { getTasks, createTask, updateTaskStatus, updateTask, deleteTask } from './controllers/taskController';
 
@@ -23,6 +24,7 @@ const router: Router = express.Router();
 router.post('/user/create-user', createUser); //signup
 router.post('/user/login', loginUser); //login
 router.put('/user/update-position', auth, handleUpdateUserPosition as RequestHandler); // Update user position (admin/member)
+router.get('/user/:userName', auth, getUserByUsername as unknown as RequestHandler);
 
 // room routes
 router.post('/room/', auth, createRoom); // Create a new room
@@ -47,5 +49,11 @@ router.post('/org/add-user', auth, addUserToOrganisation as unknown as RequestHa
 router.post('/org/remove-user', auth, removeUserFromOrganisation as unknown as RequestHandler);
 router.post('/org/check-admin', auth, checkUserIsAdmin as unknown as RequestHandler);
 router.post('/org/update-role', auth, updateUserRoleHandler);
+router.post('/org/recursive-members', auth, handleGetRecursiveProjectMembers as unknown as RequestHandler);
+
+// User skills routes
+router.get('/user/skills', auth, getUserSkills as unknown as RequestHandler);
+router.post('/user/skills', auth, addUserSkill as unknown as RequestHandler);
+router.delete('/user/skills/:skill', auth, removeUserSkill as unknown as RequestHandler);
 
 export default router;

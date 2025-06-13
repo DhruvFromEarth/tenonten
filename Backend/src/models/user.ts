@@ -6,6 +6,7 @@ export interface IUser extends Document {
   _id: mongoose.Types.ObjectId;
   userName: string;
   password: string;
+  skills: string[];
   rooms: mongoose.Types.ObjectId[];
   organisations: {
     organisationId: mongoose.Types.ObjectId;
@@ -24,6 +25,9 @@ const UserSchema = new Schema<IUser>({
     type: String,
     required: true
   },
+  skills: [{
+    type: String
+  }],
   rooms: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Room'

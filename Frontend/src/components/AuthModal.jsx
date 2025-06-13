@@ -18,10 +18,13 @@ export const AuthModal = ({ showModal, setShowModal, isLoggedIn, setIsLoggedIn }
   const [showJoinOrganisation, setShowJoinOrganisation] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [skills, setSkills] = useState([]);
+  const [newSkill, setNewSkill] = useState('');
 
   useEffect(() => {
     if (isLoggedIn) {
       fetchUserOrganisations();
+      fetchUserSkills();
     }
   }, [isLoggedIn]);
 
@@ -39,6 +42,44 @@ export const AuthModal = ({ showModal, setShowModal, isLoggedIn, setIsLoggedIn }
         setIsLoggedIn(false);
         localStorage.removeItem('userName');
       }
+    }
+  };
+
+  const fetchUserSkills = async () => {
+    try {
+      const response = await axios.get('/user/skills');
+      setSkills(response.data.skills || []);
+    } catch (error) {
+      console.error('Error fetching skills:', error);
+    }
+  };
+
+  const addSkill = async () => {
+    if (!newSkill.trim()) return;
+    
+    try {
+      const response = await axios.post('/user/skills', {
+        skill: newSkill.trim()
+      });
+      setSkills([...skills, newSkill.trim()]);
+      setNewSkill('');
+      setMessage('Skill added successfully!');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (error) {
+      setError(error.response?.data?.message || 'Failed to add skill');
+      setTimeout(() => setError(''), 3000);
+    }
+  };
+
+  const removeSkill = async (skillToRemove) => {
+    try {
+      await axios.delete(`/user/skills/${encodeURIComponent(skillToRemove)}`);
+      setSkills(skills.filter(skill => skill !== skillToRemove));
+      setMessage('Skill removed successfully!');
+      setTimeout(() => setMessage(''), 3000);
+    } catch (error) {
+      setError(error.response?.data?.message || 'Failed to remove skill');
+      setTimeout(() => setError(''), 3000);
     }
   };
 
@@ -195,66 +236,100 @@ export const AuthModal = ({ showModal, setShowModal, isLoggedIn, setIsLoggedIn }
               </form>
             )}
             {isLoggedIn && (
-              <div className="organisation-box">
-                <div className="organisation-header">
-                  <h3>Organisations</h3>
-                  <div className="org-actions">
-                    <button onClick={() => {
-                      setShowJoinOrganisation(!showJoinOrganisation);
-                      setIsCreateOrg(false);
-                    }}>Join</button>
-                    <button onClick={() => {
-                      setIsCreateOrg(!isCreateOrg);
-                      setShowJoinOrganisation(false);
-                    }}>Create</button>
+              <>
+                <div className="organisation-box">
+                  <div className="organisation-header">
+                    <h3>Organisations</h3>
+                    <div className="org-actions">
+                      <button onClick={() => {
+                        setShowJoinOrganisation(!showJoinOrganisation);
+                        setIsCreateOrg(false);
+                      }}>Join</button>
+                      <button onClick={() => {
+                        setIsCreateOrg(!isCreateOrg);
+                        setShowJoinOrganisation(false);
+                      }}>Create</button>
+                    </div>
+                  </div>
+
+                  {showJoinOrganisation && (
+                    <div className="create-org-form">
+                      <input
+                        type="text"
+                        placeholder="Enter organisation name"
+                        value={joinOrganisationName}
+                        onChange={(e) => setJoinOrganisationName(e.target.value)}
+                      />
+                      <button onClick={handleJoinOrganisation}>Send Request</button>
+                    </div>
+                  )}
+
+                  {isCreateOrg && (
+                    <div className="create-org-form">
+                      <input
+                        type="text"
+                        placeholder="Enter organisation name"
+                        value={newOrgName}
+                        onChange={(e) => setNewOrgName(e.target.value)}
+                      />
+                      <button onClick={createOrganisation}>Create</button>
+                    </div>
+                  )}
+
+                  {message && <div className="success-message">{message}</div>}
+                  {error && <div className="error-message">{error}</div>}
+
+                  <div className="organisations-list">
+                    {organisations.map((org, index) => (
+                      <button
+                        key={index}
+                        className={`organisation-item ${localStorage.getItem('selectedOrganisation') === org.organisationName ? 'selected' : ''}`}
+                        onClick={() => {
+                          if (org.organisationName) {
+                            localStorage.setItem('selectedOrganisation', org.organisationName);
+                            window.location.reload();
+                            setShowModal(false);
+                          }
+                        }}
+                      >
+                        {org.organisationName} {org.position ? `(${org.position})` : ''}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
-                {showJoinOrganisation && (
-                  <div className="create-org-form">
+                <div className="skills-section">
+                  <h3>Your Skills</h3>
+                  <div className="skills-input">
                     <input
                       type="text"
-                      placeholder="Enter organisation name"
-                      value={joinOrganisationName}
-                      onChange={(e) => setJoinOrganisationName(e.target.value)}
-                    />
-                    <button onClick={handleJoinOrganisation}>Send Request</button>
-                  </div>
-                )}
-
-                {isCreateOrg && (
-                  <div className="create-org-form">
-                    <input
-                      type="text"
-                      placeholder="Enter organisation name"
-                      value={newOrgName}
-                      onChange={(e) => setNewOrgName(e.target.value)}
-                    />
-                    <button onClick={createOrganisation}>Create</button>
-                  </div>
-                )}
-
-                {message && <div className="success-message">{message}</div>}
-                {error && <div className="error-message">{error}</div>}
-
-                <div className="organisations-list">
-                  {organisations.map((org, index) => (
-                    <button
-                      key={index}
-                      className={`organisation-item ${localStorage.getItem('selectedOrganisation') === org.organisationName ? 'selected' : ''}`}
-                      onClick={() => {
-                        if (org.organisationName) {
-                          localStorage.setItem('selectedOrganisation', org.organisationName);
-                          window.location.reload();
-                          setShowModal(false);
+                      placeholder="Add a new skill"
+                      value={newSkill}
+                      onChange={(e) => setNewSkill(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          addSkill();
                         }
                       }}
-                    >
-                      {org.organisationName} {org.position ? `(${org.position})` : ''}
-                    </button>
-                  ))}
+                    />
+                    <button onClick={addSkill}>Add</button>
+                  </div>
+                  <div className="skills-list">
+                    {skills.map((skill, index) => (
+                      <div key={index} className="skill-tag">
+                        {skill}
+                        <button
+                          className="remove-skill"
+                          onClick={() => removeSkill(skill)}
+                        >
+                          ×
+                        </button>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </>
             )}
             <div className="modal-actions-area">
               {isLoggedIn ? (

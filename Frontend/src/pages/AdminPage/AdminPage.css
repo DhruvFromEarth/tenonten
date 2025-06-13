@@ -302,4 +302,140 @@
 
 .notification-section tr:hover {
   background-color: var(--bg-tertiary);
+}
+
+.project-hierarchy {
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.hierarchy-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--card-bg);
+  box-shadow: 0 1px 3px var(--shadow-color);
+}
+
+.hierarchy-table th,
+.hierarchy-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hierarchy-table th {
+  background-color: var(--bg-tertiary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hierarchy-table tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+.org-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.org-list li {
+  padding: 0.25rem 0;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.org-list li:last-child {
+  border-bottom: none;
+}
+
+.hierarchy-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.user-projects {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-projects h3 {
+  margin: 0 0 1rem 0;
+  color: #333;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.project-item {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.project-item h4 {
+  margin: 0 0 0.5rem 0;
+  color: #495057;
+}
+
+.project-members {
+  margin-top: 0.5rem;
+}
+
+.project-members h5 {
+  margin: 0 0 0.5rem 0;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.project-members ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.project-members li {
+  padding: 0.25rem 0;
+  color: #495057;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #eee;
+}
+
+.project-members li:last-child {
+  border-bottom: none;
+}
+
+.skills-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.skill-tag {
+  background-color: var(--bg-tertiary);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.no-skills {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 0.9em;
 } 

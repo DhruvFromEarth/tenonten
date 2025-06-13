@@ -218,3 +218,74 @@
   border-radius: 4px;
   background-color: var(--bg-secondary);
 }
+
+.skills-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+}
+
+.skills-section h3 {
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.skills-input {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.skills-input input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-bg);
+  color: var(--input-text);
+}
+
+.skills-input button {
+  padding: 8px 16px;
+  background-color: var(--success-color);
+  color: var(--button-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.skills-input button:hover {
+  opacity: 0.9;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-tag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-tertiary);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.9em;
+  color: var(--text-primary);
+}
+
+.remove-skill {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0 4px;
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+.remove-skill:hover {
+  color: var(--error-color);
+}
